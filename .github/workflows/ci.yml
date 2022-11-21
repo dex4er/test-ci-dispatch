@@ -19,6 +19,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: my-event
+          event-type: test-ci-dispatch
           repository: dex4er/test-ci
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
