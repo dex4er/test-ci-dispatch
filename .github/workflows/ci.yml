@@ -12,5 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run a one-line script
+      - name: Show environment
         run: set
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: my-event
+          repository: dex4er/test-ci
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
