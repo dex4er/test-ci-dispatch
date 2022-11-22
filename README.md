@@ -1,3 +1,3 @@
-# test-ci
+# test-ci-dispatch
 
 Test of GitHub Actions.
