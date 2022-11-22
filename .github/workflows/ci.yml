@@ -6,8 +6,45 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  testing:
     runs-on: ubuntu-latest
+    environment: testing
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Show environment
+        run: set
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: test-ci-dispatch
+          repository: dex4er/test-ci
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+
+  staging:
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Show environment
+        run: set
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: test-ci-dispatch
+          repository: dex4er/test-ci
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+
+  production:
+    runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - uses: actions/checkout@v3
