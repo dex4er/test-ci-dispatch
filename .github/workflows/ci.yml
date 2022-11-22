@@ -27,6 +27,7 @@ jobs:
   staging:
     runs-on: ubuntu-latest
     environment: staging
+    needs: testing
 
     steps:
       - uses: actions/checkout@v3
@@ -45,6 +46,7 @@ jobs:
   production:
     runs-on: ubuntu-latest
     environment: production
+    needs: staging
 
     steps:
       - uses: actions/checkout@v3
