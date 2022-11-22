@@ -17,12 +17,13 @@ jobs:
         run: set
 
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: test-ci-dispatch
-          repository: dex4er/test-ci
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          owner: dex4er
+          repo: dex4er/test-ci
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          workflow_file_name: ci.yml
+          client_payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
 
   staging:
     runs-on: ubuntu-latest
