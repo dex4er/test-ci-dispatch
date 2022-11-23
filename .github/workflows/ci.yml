@@ -20,7 +20,7 @@ jobs:
         uses: convictional/trigger-workflow-and-wait@v1.6.1
         with:
           owner: dex4er
-          repo: dex4er/test-ci
+          repo: test-ci
           github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
           workflow_file_name: ci.yml
           client_payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
