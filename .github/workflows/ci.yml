@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  testing:
+  first:
     runs-on: ubuntu-latest
-    environment: testing
+    environment: first
 
     steps:
       - uses: actions/checkout@v3
@@ -16,19 +16,10 @@ jobs:
       - name: Show environment
         run: set
 
-      - name: Repository Dispatch
-        uses: convictional/trigger-workflow-and-wait@v1.6.1
-        with:
-          owner: dex4er
-          repo: test-ci
-          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          workflow_file_name: ci.yml
-          client_payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-
-  staging:
+  second:
     runs-on: ubuntu-latest
-    environment: staging
-    needs: testing
+    environment: second
+    needs: first
 
     steps:
       - uses: actions/checkout@v3
@@ -36,29 +27,13 @@ jobs:
       - name: Show environment
         run: set
 
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: test-ci-dispatch
-          repository: dex4er/test-ci
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-
-  production:
+  third:
     runs-on: ubuntu-latest
-    environment: production
-    needs: staging
+    environment: third
+    needs: second
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Show environment
         run: set
-
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: test-ci-dispatch
-          repository: dex4er/test-ci
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
